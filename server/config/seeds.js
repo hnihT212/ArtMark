@@ -1,5 +1,6 @@
 const db = require("./connection");
 const { User, Items, list } = require("../model");
+const { mainModule } = require("process");
 
 db.once("open", async () => {
   await list.deleteMany();
@@ -17,7 +18,7 @@ db.once("open", async () => {
   await Items.deleteMany();
   const items = await Items.insertmany([
     {
-      name: "",
+      name: "Large Paint brush",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
       image: "cookie-tin.jpg",
@@ -26,7 +27,7 @@ db.once("open", async () => {
       quantity: 500,
     },
     {
-      name: "Canned Coffee",
+      name: "mini scuplture",
       description:
         "Praesent sed lacinia mauris. Nulla congue nibh magna, at feugiat nunc scelerisque quis. Donec iaculis rutrum vulputate. Suspendisse lectus sem, vulputate ac lectus sed, placerat consequat dui.",
       image: "canned-coffee.jpg",
@@ -35,7 +36,7 @@ db.once("open", async () => {
       quantity: 500,
     },
     {
-      name: "Toilet Paper",
+      name: "Molds",
       list: options[1]._id,
       description:
         "Donec volutpat erat erat, sit amet gravida justo sodales in. Phasellus tempus euismod urna. Proin ultrices nisi ut ipsum congue, vitae porttitor libero suscipit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam lacinia a nisi non congue.",
@@ -44,7 +45,7 @@ db.once("open", async () => {
       quantity: 20,
     },
     {
-      name: "Handmade Soap",
+      name: "Clay",
       list: options[1]._id,
       description:
         "Praesent placerat, odio vel euismod venenatis, lectus arcu laoreet felis, et fringilla sapien turpis vestibulum nisl.",
@@ -53,7 +54,7 @@ db.once("open", async () => {
       quantity: 50,
     },
     {
-      name: "Set of Wooden Spoons",
+      name: "paint supplies ",
       list: options[1]._id,
       description:
         "Vivamus ut turpis in purus pretium mollis. Donec turpis odio, semper vel interdum ut, vulputate at ex. Duis dignissim nisi vel tortor imperdiet finibus. Aenean aliquam sagittis rutrum.",
@@ -62,4 +63,25 @@ db.once("open", async () => {
       quantity: 100,
     },
   ]);
+
+  console.log('Items seeds');
+
+  await User.deleteMany();
+
+  await User.create({
+    email: "brooksb@mail.com",
+    password: "brooks",
+    orders: [
+        {
+            Items: [items[0]._id, items[0]._id, items[1]._id]
+        }
+    ]
+  });
+  await User.create({
+    email: "jasmineJ@mainModule.com",
+    password: "jasmine",
+  });
+  console.log("user seeds");
+
+  process.exit();
 });
