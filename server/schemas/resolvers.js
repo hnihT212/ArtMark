@@ -8,28 +8,27 @@ const resolvers = {
     categories: async () => {
       return await category.find();
     },
-    products: async (parent, { Category, name }) => {
-      const params = {};
+    products: async (parent, args, context) => {
+    //   const params = {};
 
-      if (Category) {
-        params.Category = Category;
-      }
-      if (name) {
-        params.name = {
-          $regex: name,
-        };
-      }
-      return await product.find(params).populate("Category");
+    //   if (Category) {
+    //     params.Category = Category;
+    //   }
+    //   if (name) {
+    //     params.name = {
+    //       $regex: name,
+    //     };
+    //   }
+      return await product.find().populate("Category");
     },
-    Product: async (parent, { _id }) => {
+    product: async (parent, { _id }) => {
       return await product.findById(_id).populate("Category");
     },
-    User: async (parent, args, context) => {
-      if (context.User) {
-        const User = await user.findById(context.User._id).populate({
-          path: "orders.Products",
-          populate: "Category",
-        });
+    user: async (parent, args, context) => {
+      if (context.user) {
+        const User = await user.findById(context.User._id).populate(
+           "Category"
+        );
 
         User.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
@@ -38,13 +37,10 @@ const resolvers = {
 
       throw new AuthenticationError("log in please");
     },
-    Order: async (parent, { _id }, context) => {
-      if (context.User) {
-        const User = await user.findById(context.User._id).populate({
-          path: "Orders.Products",
-          populate: "Category",
-        });
-        return User.Orders.id(_id);
+    order: async (parent, { _id }, context) => {
+      if (context.user) {
+        const userData = await user.findById(context.user._id)
+        return userData;
       }
       throw new AuthenticationError("please log in ");
     },

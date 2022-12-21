@@ -1,13 +1,13 @@
 // import the gql tagged template function
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 // create our typeDefs
 const typeDefs = gql` 
-type Category {
-    _id: ID
-    name: String
-}
-    type product {
+    type Category {
+        _id: ID
+        name: String
+    }
+    type Product {
         _id: ID
         name: String
         illstration: String
@@ -17,7 +17,7 @@ type Category {
         category: Category
     }
 
-    type order {
+    type Order {
         _id: ID
         purchaseDate: String
         products: [Product]
@@ -28,7 +28,7 @@ type Category {
         firstName: String
         lastName: String
         email: String
-        orders: [order]
+        orders: [Order]
     }
 
     type Checkout {
@@ -37,29 +37,28 @@ type Category {
 
     type Auth {
         token: ID
-        user: user
+        user: User
     }
 
     type Query {
         categories: [Category]
-        products(category: ID, name: String): [product]
-        product(_id: ID!): product
-        user: user
-        order:(_id: ID!): order
-        checkout(products: [ID]!): checkout
+        products: [Product]
+        product(_id: ID!): Product
+        user: User
+        order(_id: ID!): Order
+        checkout(products: [ID]!): Checkout
+   
     }
     type Mutation {
-        plusUser(firstName: String!, lastName: String!, email: String!, password: String!) Auth
-        plusOrder(products: [ID]!): order
-        modifyUser(firstName: String, lastName: String, emial: String!, password: String): user
-        modifyProduct(_id: ID!, quantity: Int!): product
+        plusUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+        plusOrder(products: [ID]!): Order
+        modifyUser(firstName: String, lastName: String, email: String!, password: String): User
+        modifyProduct(_id: ID!, quantity: Int!): Product
         login(email: String!, password: String!): Auth
     }
-    
 
-}
 `;
-module.exports = typeDefs;
 
-// export the typeDefs
+
+// // export the typeDefs
 module.exports = typeDefs;
