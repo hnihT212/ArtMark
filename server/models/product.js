@@ -6,27 +6,27 @@ const productSchema = new Schema({
   name: {
     type: String,
     required: true,
-    trim: true,
+    trim: true
   },
   illustration: {
-    type: String,
+    type: String
   },
   potrait: {
-    type: String,
+    type: String
   },
   cost: {
     type: Number,
     require: true,
-    min: 1.0,
+    min: 1.00
   },
   quantity: {
     type: Number,
     min: 0,
-    default: 0,
+    default: 0
   },
   category: {
     type: Schema.Types.ObjectId,
-    ref: "Category",
+    ref: "category",
     required: true,
   },
 });

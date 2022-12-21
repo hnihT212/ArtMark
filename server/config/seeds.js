@@ -1,11 +1,11 @@
 const db = require("./connection");
-const { User, Items, list } = require("../models");
+const { User, Items, list, product } = require("../models");
 
 db.once("open", async () => {
   await list.deleteMany();
 
   const options = await list.insertmany([
-    { name: "sculpturces" },
+    { name: "sculptures" },
     { name: "paintings" },
     { name: "clay" },
     { name: "supplies" },
@@ -18,9 +18,9 @@ db.once("open", async () => {
   const items = await Items.insertmany([
     {
       name: "Large Paint brush",
-      description:
+      illustration:
         "",
-      image: "",
+      potrait: "",
       list: options[0]._id,
       price: 2.99,
       quantity: 500,
@@ -29,7 +29,7 @@ db.once("open", async () => {
       name: "mini scuplture",
       description:
         "",
-      image: "",
+      potrait: "",
       list: options[0]._id,
       price: 1.99,
       quantity: 500,
@@ -39,8 +39,8 @@ db.once("open", async () => {
       list: options[1]._id,
       description:
         "",
-      image: "",
-      price: 7.99,
+      potrait: "",
+      cost: 7.99,
       quantity: 20,
     },
     {
@@ -48,17 +48,17 @@ db.once("open", async () => {
       list: options[1]._id,
       description:
         "",
-      image: "",
-      price: 3.99,
+      potrait: "",
+      cost: 3.99,
       quantity: 50,
     },
     {
       name: "paint supplies ",
       list: options[1]._id,
-      description:
+      illustration:
         "",
-      image: "",
-      price: 14.99,
+      potrait: "",
+      cost: 14.99,
       quantity: 100,
     },
   ]);
@@ -68,17 +68,21 @@ db.once("open", async () => {
   await User.deleteMany();
 
   await User.create({
+    firstName: "Brooklyn",
+    lastName: "Barber",
     email: "brooksb@mail.com",
-    password: "brooks",
+    password: "password123",
     orders: [
         {
-            Items: [items[0]._id, items[0]._id, items[1]._id]
+            product: [product[0]._id, product[0]._id, product[1]._id]
         }
     ]
   });
   await User.create({
-    email: "jasmineJ@mainModule.com",
-    password: "jasmine",
+    firstName: "Rick",
+    lastName: "Floss",
+    email: "rickfJ@mail.com",
+    password: "password123",
   });
   console.log("user seeds");
 
