@@ -8,13 +8,13 @@ const productSchema = new Schema({
         required: true,
         trim: true
     },
-    Illustration: {
+    illustration: {
         type: String
     },
     potrait: {
         type: String
     },
-    price: {
+    cost: {
         type: Number,
         require: true,
         min: 1.00

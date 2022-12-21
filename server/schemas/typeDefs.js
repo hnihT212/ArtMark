@@ -11,8 +11,25 @@ type Category {
     type product {
         _id: ID
         name: String
-        
+        illstration: String
+        potrait: String
+        quantity: Int
+        cost: Float
+        category: Category
     }
+    type order {
+        _id: ID
+        purchaseDate: String
+        products: [Product]
+    }
+    type User {
+        _id: ID
+        firstName: String
+        lastName: String
+        email: String
+        orders: [order]
+    }
+    
 }`;
 
 // export the typeDefs
