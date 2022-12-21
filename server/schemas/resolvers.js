@@ -45,10 +45,62 @@ const resolvers = {
                 });
                 return User.Orders.id(_id);
             }
-            throw new AuthenticationError('please logg in ');
+            throw new AuthenticationError('please log in ');
         },
+checkout: async (parent, args , context) => {
+    const url= new URL(context.headers.referer).origin;
+    const Order = new order({products: args.products});
+    const line_items = [];
 
+    const {products } = await Order.populate('Products');
+
+    for (let i = 0; i < products.length; i++) {
+        const product = await stripe.products.create({
+            name: products[i].name,
+            illustration: products[i].illustration,
+            potrait: [`${url}/potrait/${products[i].potrait}`]
+        });
+
+        const cost = await stripe.costs.create({
+            product: product.id,
+            unit_amount: products[i].cost * 100,
+            curreny: 'usd',
+        });
+
+        line_items.push({
+            cost: cost.id,
+            quantity: 1
+        });
+    }
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/`
+    });
+    return {session: session.id};
+}
         
+    },
+    Mutation: {
+        plusUser: async (parent, args) => {
+            const User = await User.create(args);
+            const token = signToken(User);
+
+            return { token, User};
+        },
+        plusOrder: async (parent, {Products}, context)=> {
+            console.log(context);
+            if (context.User) {
+                const Order = new order({products});
+                await user.findByIdAndUpdate(context.user._id, {$push: { orders: order } });
+                return Order;
+            }
+            throw new AuthenticationError('please log in ');
+            modifyProduct: async (parent, {})
+        }
+
     }
 }
   
