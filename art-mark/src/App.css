@@ -16,17 +16,17 @@
   font-size: 3rem;
 }
 
-.services {
+/* .services {
   background-image: url('../public/images/img-2.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
   font-size: 100px;
-}
+} */
 
 .products {
-  background-image: url('../public/images/img-1.jpg');
+  background-image: url('../public/images/tools-for-the-manufacture-of-leather-products-on-t-2022-02-09-15-49-44-utc.jpg');
   background-position: center;
   background-size: fill;
   background-repeat: no-repeat;
@@ -34,11 +34,11 @@
   font-size: 100px;
 }
 
-.sign-up {
+/* .sign-up {
   background-image: url('../public/images/img-8.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
   font-size: 100px;
-}
+} */
