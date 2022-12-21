@@ -10,6 +10,7 @@ const resolvers = {
     },
     products: async (parent, { Category, name }) => {
       const params = {};
+
       if (Category) {
         params.Category = Category;
       }
@@ -26,7 +27,7 @@ const resolvers = {
     User: async (parent, args, context) => {
       if (context.User) {
         const User = await user.findById(context.User._id).populate({
-          path: "Orders.Products",
+          path: "orders.Products",
           populate: "Category",
         });
 
@@ -126,7 +127,7 @@ const resolvers = {
         throw new AuthenticationError('incorrect login')
       }
       
-      const token = signToken(User);
+      const token = signToken(user);
       return { token, user};
     },
   },

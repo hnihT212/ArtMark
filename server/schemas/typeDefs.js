@@ -31,7 +31,7 @@ type Category {
         orders: [order]
     }
 
-    type checkout {
+    type Checkout {
         session: ID
     }
 

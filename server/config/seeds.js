@@ -1,43 +1,43 @@
 const db = require("./connection");
-const { User, Items, list, product } = require("../models");
+const { User, category, product } = require("../models");
 
 db.once("open", async () => {
-  await list.deleteMany();
+  await category.deleteMany();
 
-  const options = await list.insertmany([
+  const categories = await category.insertmany([
     { name: "sculptures" },
     { name: "paintings" },
     { name: "clay" },
     { name: "supplies" },
-    { name: "molds" },
+    { name: "molds" }
+
   ]);
 
   console.log("options seeds");
 
-  await Items.deleteMany();
-  const items = await Items.insertmany([
+  await product.deleteMany();
+  const Products = await product.insertmany([
     {
       name: "Large Paint brush",
       illustration:
         "",
       potrait: "",
-      list: options[0]._id,
-      price: 2.99,
+      category: categories[0]._id,
+      cost: 2.99,
       quantity: 500,
     },
     {
       name: "mini scuplture",
-      description:
-        "",
+      illstration:"",
       potrait: "",
-      list: options[0]._id,
-      price: 1.99,
+      category: categories[0]._id,
+      cost: 1.99,
       quantity: 500,
     },
     {
       name: "Molds",
-      list: options[1]._id,
-      description:
+      category: categories[1]._id,
+      illstration:
         "",
       potrait: "",
       cost: 7.99,
@@ -45,8 +45,8 @@ db.once("open", async () => {
     },
     {
       name: "Clay",
-      list: options[1]._id,
-      description:
+      category: categories[1]._id,
+      illstration:
         "",
       potrait: "",
       cost: 3.99,
@@ -54,7 +54,7 @@ db.once("open", async () => {
     },
     {
       name: "paint supplies ",
-      list: options[1]._id,
+      category: categories[1]._id,
       illustration:
         "",
       potrait: "",
@@ -74,7 +74,7 @@ db.once("open", async () => {
     password: "password123",
     orders: [
         {
-            product: [product[0]._id, product[0]._id, product[1]._id]
+            products: [Products[0]._id, Products[0]._id, Products[1]._id]
         }
     ]
   });
